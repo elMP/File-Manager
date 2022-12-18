@@ -1,19 +1,25 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 
+import { currentDirectory } from './modules/directory.js';
 import { parseArgs } from './modules/args.js';
 
 const readlineInterface = readline.createInterface({ input, output });
 
 const args = parseArgs();
+const directory = new currentDirectory();
 
 const userName = args['username'] || 'Anonymous';
 console.log(`Welcome to the File Manager, ${userName}`);
-console.log('You are currently in you working directory');
+console.log(directory.getDirectoryPrompt());
+output.write('> ');
 
 readlineInterface.on('line', (input) => {
   if (input === '.exit') readlineInterface.close();
-  else console.log('You are currently in you working directory');
+  else {
+    console.log(directory.getDirectoryPrompt());
+    output.write('> ');
+  }
 });
 
 readlineInterface.on('close', () => {
