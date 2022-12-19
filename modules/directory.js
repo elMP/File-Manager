@@ -55,7 +55,7 @@ export class currentDirectory {
       await chdir(path);
       this.homeDirectory = cwd();
     } catch (e) {
-      console.error(e.message);
+      console.error('Operation failed');
     }
   }
 }
