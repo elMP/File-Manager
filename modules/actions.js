@@ -1,4 +1,4 @@
-const commands = { ls: readDirectory };
+const commands = { ls: readDirectory, up: changeDirectory };
 
 export async function doCommand(command, directory) {
   try {
@@ -10,4 +10,8 @@ export async function doCommand(command, directory) {
 
 async function readDirectory(directory) {
   await directory.readDirectory();
+}
+
+async function changeDirectory(directory) {
+  await directory.changeDirectory('..');
 }

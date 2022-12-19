@@ -1,11 +1,13 @@
 import * as os from 'os';
 import * as fs from 'fs/promises';
+import { chdir, cwd } from 'node:process';
 
 import { sortCaseInsensitive } from './sort.js';
 
 export class currentDirectory {
   constructor() {
     this.homeDirectory = os.homedir();
+    chdir(this.homeDirectory);
   }
 
   getDirectory() {
@@ -44,7 +46,16 @@ export class currentDirectory {
 
       console.table(dirArray.concat(filesArray));
     } catch (e) {
-      console.log(e.message);
+      console.error(e.message);
+    }
+  }
+
+  async changeDirectory(path) {
+    try {
+      await chdir(path);
+      this.homeDirectory = cwd();
+    } catch (e) {
+      console.error(e.message);
     }
   }
 }
