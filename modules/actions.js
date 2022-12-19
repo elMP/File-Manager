@@ -1,10 +1,15 @@
-const commands = { ls: readDirectory, up: changeDirectoryToUp };
+const commands = {
+  ls: readDirectory,
+  up: changeDirectoryToUp,
+  cd: changeDirectoryToUp,
+};
 
 export async function doCommand(command, directory) {
   try {
-    if (command.indexOf('cd') === 0)
-      await directory.changeDirectory(command.substring(2).trim());
-    else await commands[command](directory);
+    const twoSymbolCommand = command.substring(0, 2);
+    const threeSymbolCommand = command.substring(0, 3);
+
+    await commands[twoSymbolCommand](directory, command.substring(2).trim());
   } catch {
     console.log('Invalid input');
   }
@@ -14,6 +19,7 @@ async function readDirectory(directory) {
   await directory.readDirectory();
 }
 
-async function changeDirectoryToUp(directory) {
-  await directory.changeDirectory('..');
+async function changeDirectoryToUp(directory, path) {
+  if (path) await directory.changeDirectory(path);
+  else await directory.changeDirectory('..');
 }
