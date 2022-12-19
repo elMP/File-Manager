@@ -3,6 +3,7 @@ import { stdin as input, stdout as output } from 'node:process';
 
 import { currentDirectory } from './modules/directory.js';
 import { parseArgs } from './modules/args.js';
+import { doCommand } from './modules/actions.js';
 
 const readlineInterface = readline.createInterface({ input, output });
 
@@ -17,6 +18,7 @@ output.write('> ');
 readlineInterface.on('line', (input) => {
   if (input === '.exit') readlineInterface.close();
   else {
+    console.log(doCommand(directory.getDirectory()));
     console.log(directory.getDirectoryPrompt());
     output.write('> ');
   }
