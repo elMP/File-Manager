@@ -1,9 +1,13 @@
-const commands = {};
+const commands = { ls: readDirectory };
 
-export function doCommand(directory) {
+export async function doCommand(command, directory) {
   try {
-    commands[directory]();
+    await commands[command](directory);
   } catch {
-    return 'Invalid input';
+    console.log('Invalid input');
   }
+}
+
+async function readDirectory(directory) {
+  await directory.readDirectory();
 }

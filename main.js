@@ -15,10 +15,10 @@ console.log(`Welcome to the File Manager, ${userName}`);
 console.log(directory.getDirectoryPrompt());
 output.write('> ');
 
-readlineInterface.on('line', (input) => {
+readlineInterface.on('line', async (input) => {
   if (input === '.exit') readlineInterface.close();
   else {
-    console.log(doCommand(directory.getDirectory()));
+    await doCommand(input, directory);
     console.log(directory.getDirectoryPrompt());
     output.write('> ');
   }
